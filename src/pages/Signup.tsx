@@ -2,11 +2,12 @@ import { Form, Formik } from "formik";
 import Button from "../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import InputField from "../components/InputField";
-import type { SignupValuesProps } from "../types/signup";
+import type { SignupPropsType } from "../types/signup";
 import { validateSignup } from "../utils/validateFields";
 import axios from "axios";
+import { userSignup } from "../services/auth.service";
 
-const initialValues: SignupValuesProps = {
+const initialValues: SignupPropsType = {
     name: "",
     email: "",
     password: "",
@@ -16,14 +17,13 @@ const initialValues: SignupValuesProps = {
 const Signup = () => {
     const navigate = useNavigate();
 
-    const handleSubmit = async (values: SignupValuesProps) => {
+    const handleSubmit = async (values: SignupPropsType) => {
         try {
-            const response = await axios.post(`${import.meta.env.VITE_AUTH_URI}/register`, values);
-            if (response.data.success) {
-                alert(response.data.message);
+            const data = await userSignup(values);
+            if (data.success) {
+                alert(data.message);
                 navigate("/login");
             }
-            console.log(response.data);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 alert(error.response?.data?.message || "Something went wrong. Try again");

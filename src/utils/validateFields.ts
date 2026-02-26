@@ -1,13 +1,13 @@
 import type { LoginValuesProps } from "../types/login";
-import type { SignupValuesProps } from "../types/signup";
+import type { SignupPropsType } from "../types/signup";
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const passwordRegex = /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!]).*$/;
 const nameRegex = /^(?!.*\d)[a-zA-Z\s]{2,50}$/;
 
-export const validateSignup = (values: SignupValuesProps) => {
+export const validateSignup = (values: SignupPropsType) => {
     const { name, email, password, confirmPassword } = values;
-    const errors: Partial<SignupValuesProps> = {};
+    const errors: Partial<SignupPropsType> = {};
 
     if (!name) {
         errors.name = "Name is required";
