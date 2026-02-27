@@ -2,11 +2,13 @@ import { Form, Formik } from "formik";
 import Button from "../components/Button";
 import { Link, useNavigate } from "react-router-dom";
 import InputField from "../components/InputField";
-import type { SignupValuesProps } from "../types/signup";
+import type { SignupPropsType } from "../types/signup";
 import { validateSignup } from "../utils/validateFields";
-import { useUser } from "../context/UserContext";
+import axios from "axios";
+import { userSignup } from "../services/auth.service";
+import toast from "react-hot-toast";
 
-const initialValues: SignupValuesProps = {
+const initialValues: SignupPropsType = {
     name: "",
     email: "",
     password: "",
@@ -14,13 +16,20 @@ const initialValues: SignupValuesProps = {
 }
 
 const Signup = () => {
-    const context = useUser();
     const navigate = useNavigate();
 
-    const handleSubmit = (values: SignupValuesProps) => {
-        context?.setUserData(values);
-        navigate("/login");
-        console.log(values);
+    const handleSubmit = async (values: SignupPropsType) => {
+        try {
+            const data = await userSignup(values);
+            if (data.success) {
+                toast.success(data.message);
+                navigate("/login");
+            }
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.message || "Something went wrong. Try again");
+            }
+        }
     }
 
     return (
@@ -34,8 +43,6 @@ const Signup = () => {
                 <Formik
                     initialValues={initialValues}
                     validate={validateSignup}
-                    validateOnBlur={false}
-                    validateOnChange={false}
                     onSubmit={handleSubmit}
                 >
                     {() => (

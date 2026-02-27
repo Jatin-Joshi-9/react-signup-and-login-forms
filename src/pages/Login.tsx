@@ -2,27 +2,33 @@ import { Form, Formik } from "formik";
 import InputField from "../components/InputField";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
-import { useState } from "react";
-import type { LoginValuesProps } from "../types/login";
+import type { LoginPropsType } from "../types/login";
 import { validateLogin } from "../utils/validateFields";
-import { useUser } from "../context/UserContext";
+import axios from "axios";
+import { setAuthToken } from "../utils/authToken";
+import { userLogin } from "../services/auth.service";
+import toast from "react-hot-toast";
 
-const initialValues: LoginValuesProps = {
+const initialValues: LoginPropsType = {
     email: "",
     password: "",
 }
 
 const Login = () => {
-    const [error, setError] = useState<string | null>(null);
-    const context = useUser();
     const navigate = useNavigate();
 
-    const handleSubmit = (values: LoginValuesProps) => {
-        if (context?.userData?.email === values.email && context?.userData.password === values.password) {
-            alert("Login Successful");
-            navigate("/");
-        } else {
-            setError("Invalid email or password");
+    const handleSubmit = async (values: LoginPropsType) => {
+        try {
+            const data = await userLogin(values);
+            if (data.success) {
+                toast.success(data.message);
+                setAuthToken(data.data.token);
+                navigate("/");
+            }
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                toast.error(error.response?.data?.message || "Something went wrong. Try again");
+            }
         }
     }
 
@@ -34,8 +40,6 @@ const Login = () => {
                 <Formik
                     initialValues={initialValues}
                     validate={validateLogin}
-                    validateOnBlur={false}
-                    validateOnChange={false}
                     onSubmit={handleSubmit}
                 >
                     {() => (
@@ -60,10 +64,6 @@ const Login = () => {
                         </Form>
                     )}
                 </Formik>
-
-                {error ? (
-                    <div className="text-sm text-red-500 text-center">{error}</div>
-                ) : null}
 
                 <p className="text-sm sm:text-base text-center text-neutral-500">
                     Don't have an account?&nbsp;

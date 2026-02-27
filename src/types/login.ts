@@ -1,4 +1,4 @@
-export type LoginValuesProps = {
+export type LoginPropsType = {
     email: string;
     password: string;
 }
