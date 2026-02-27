@@ -6,6 +6,7 @@ import { createTicket } from "../api/ticket.api";
 import toast from "react-hot-toast";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
+import { useNavigate } from "react-router-dom";
 
 const initialValues: TicketType = {
     title: "",
@@ -13,11 +14,13 @@ const initialValues: TicketType = {
 }
 
 const CreateTicket = () => {
+    const navigate = useNavigate();
     const handleSubmit = async (values: TicketType) => {
         try {
             const data = await createTicket(values)
             if (data.success) {
                 toast.success(data.message);
+                navigate("/tickets");
             }
         } catch (error) {
             if (axios.isAxiosError(error)) {
