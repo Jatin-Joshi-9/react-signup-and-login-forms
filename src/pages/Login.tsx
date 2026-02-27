@@ -26,7 +26,6 @@ const Login = () => {
                 setAuthToken(data.data.token);
                 navigate("/");
             }
-            console.log(data);
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 setError(error.response?.data?.message || "Something went wrong. Try again");
