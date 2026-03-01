@@ -3,6 +3,7 @@ export type TicketType = {
     title: string;
     description: string;
     status?: string;
+    priority?: string;
     agentName?: string;
     createdAt?: Date;
 }

@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import { getAllTickets } from "../api/ticket.api";
 import type { TicketType } from "../types/ticket";
 import { Link } from "react-router-dom";
+import useIsAllowed from "../hooks/useIsAllowed";
 
 const Tickets = () => {
     const [tickets, setTickets] = useState<(TicketType | null)[]>();
+    const isAllowed = useIsAllowed();
 
     useEffect(() => {
         const fetchTickets = async () => {
@@ -33,7 +35,8 @@ const Tickets = () => {
                                 Status
                             </th>
                             <th className="px-3 md:px-6 py-3 font-semibold text-nowrap">
-                                Support Agent
+                                {isAllowed("VIEW_OWN_TICKETS") && "Support Agent"}
+                                {isAllowed("VIEW_ASSIGNED_TICKETS") && "Priority"}
                             </th>
                             <th className="px-3 md:px-6 py-3 font-semibold">
                                 Create At
@@ -58,7 +61,8 @@ const Tickets = () => {
                                     {ticket?.status}
                                 </td>
                                 <td className="px-3 md:px-6 py-4 text-center text-nowrap">
-                                    {ticket?.agentName}
+                                    {isAllowed("VIEW_OWN_TICKETS") && ticket?.agentName}
+                                    {isAllowed("VIEW_ASSIGNED_TICKETS") && ticket?.priority}
                                 </td>
                                 <td className="px-3 md:px-6 py-4">
                                     {ticket?.createdAt ? new Date(ticket.createdAt).toLocaleDateString() : "-"}
@@ -69,8 +73,8 @@ const Tickets = () => {
                                         ticket?.status !== "CLOSED" &&
                                         <>
                                             <span className="text-neutral-300">|</span>
-                                            <Link 
-                                                to={`/tickets/${ticket?.id}/edit`} 
+                                            <Link
+                                                to={`/tickets/${ticket?.id}/edit`}
                                                 className="text-sky-800 hover:text-sky-500"
                                             >
                                                 Update

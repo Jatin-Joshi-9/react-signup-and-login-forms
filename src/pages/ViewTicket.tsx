@@ -4,10 +4,12 @@ import { getTicketById } from "../api/ticket.api";
 import { useParams } from "react-router-dom";
 import Comments from "../components/Comments";
 import AddComment from "../components/AddComment";
+import useIsAllowed from "../hooks/useIsAllowed";
 
 const ViewTicket = () => {
     const { id } = useParams();
     const [ticket, setTicket] = useState<TicketType | null>();
+    const isAllowed = useIsAllowed();
 
     useEffect(() => {
         const fetchTicket = async () => {
@@ -24,7 +26,18 @@ const ViewTicket = () => {
                 <h2><span className="font-semibold">Title: </span>{ticket?.title}</h2>
                 <h2><span className="font-semibold">Description: </span>{ticket?.description}</h2>
                 <h2><span className="font-semibold">Status: </span>{ticket?.status}</h2>
-                <h2><span className="font-semibold">Support Agent: </span>{ticket?.agentName}</h2>
+                <h2>
+                    {isAllowed("VIEW_OWN_TICKETS") && 
+                    <>
+                        <span className="font-semibold">Support Agent: </span>{ticket?.agentName}
+                    </>
+                    }
+                    {isAllowed("VIEW_ASSIGNED_TICKETS") && 
+                    <>
+                        <span className="font-semibold">Priority: </span>{ticket?.priority}
+                    </>
+                    }
+                </h2>
                 <h2><span className="font-semibold">Created On: </span>{ticket?.createdAt ? new Date(ticket.createdAt).toLocaleDateString() : "-"}</h2>
 
                 <Comments id={id} />
