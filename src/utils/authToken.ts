@@ -11,3 +11,7 @@ export const setAuthToken = (token: string) => {
 export const getAuthToken = () => {
     return Cookies.get("token");
 };
+
+export const removeAuthToken = () => {
+    return Cookies.remove("token");
+}
