@@ -104,3 +104,17 @@ export const addComment = async (id: string | undefined, body: string) => {
     });
     return response.data;
 }
+
+export const assignTicket = async (id: string | undefined, assignedByUserId: string | undefined, assignedToUserId: string) => {
+    const token = getAuthToken();
+    if (!token) {
+        return null;
+    }
+
+    const response = await axios.post(`${baseURI}/${id}/assign`, { assignedByUserId, assignedToUserId }, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        }
+    });
+    return response.data;
+}
