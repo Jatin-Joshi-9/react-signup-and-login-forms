@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { getAllTickets } from "../api/ticket.api";
 import type { TicketType } from "../types/ticket";
-import { Link } from "react-router-dom";
 import useIsAllowed from "../hooks/useIsAllowed";
+import TicketActions from "../components/TicketActions";
 
 const Tickets = () => {
     const [tickets, setTickets] = useState<(TicketType | null)[]>();
@@ -68,39 +68,24 @@ const Tickets = () => {
                                     {ticket?.createdAt ? new Date(ticket.createdAt).toLocaleDateString() : "-"}
                                 </td>
                                 <td className="px-3 md:px-6 py-4 space-x-1">
-                                    <Link to={`/tickets/${ticket?.id}`} className="text-sky-800 hover:text-sky-500">View</Link>
-                                    {
-                                        ticket?.status !== "CLOSED" &&
-                                        <>
-                                            <span className="text-neutral-300">|</span>
-                                            <Link
-                                                to={`/tickets/${ticket?.id}/edit`}
-                                                className="text-sky-800 hover:text-sky-500"
-                                            >
-                                                Update
-                                            </Link>
-
-                                            {isAllowed("REASSIGN_TICKET") &&
-                                                <>
-                                                    <span className="text-neutral-300">|</span>
-                                                    <Link
-                                                        to={`/tickets/${ticket?.id}/assign`}
-                                                        className="text-sky-800 hover:text-sky-500"
-                                                    >
-                                                        Assign
-                                                    </Link>
-                                                </>
-                                            }
-                                        </>
-                                    }
+                                    <TicketActions
+                                        ticketId={ticket?.id}
+                                        status={ticket?.status}
+                                    />
                                 </td>
                             </tr>
-                        ))
+                        ))}
+
+                        {tickets?.length === 0 &&
+                            <tr>
+                                <td colSpan={6} className="py-10 text-center text-neutral-400">
+                                    No tickets found
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
             </div>
-
         </div>
     )
 }
