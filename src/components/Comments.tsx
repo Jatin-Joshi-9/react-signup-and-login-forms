@@ -6,12 +6,12 @@ const Comments = ({ id }: { id: string | undefined }) => {
     const [comments, setComments] = useState<(CommentType | null)[]>();
 
     useEffect(() => {
-        const fetchTicket = async () => {
+        const fetchComments = async () => {
             const data = await getCommentsByTicketId(id);
             setComments(data.data);
         };
 
-        fetchTicket();
+        fetchComments();
     }, [id]);
 
     return (
