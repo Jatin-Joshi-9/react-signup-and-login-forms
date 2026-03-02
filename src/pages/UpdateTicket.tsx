@@ -80,7 +80,7 @@ const UpdateTicket = () => {
 
                             <div className="mt-2">
                                 <Button
-                                    label="Create Ticket"
+                                    label="Update Ticket"
                                     type="submit"
                                 />
                             </div>

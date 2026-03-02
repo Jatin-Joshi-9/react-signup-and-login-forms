@@ -28,6 +28,10 @@ const Comments = ({ id }: { id: string | undefined }) => {
                     <p className="text-sm sm:text-base">{comment?.comment}</p>
                 </div>
             ))}
+
+            {comments?.length === 0 &&
+                <p className="text-neutral-400">No Comments</p>
+            }
         </div>
     )
 }
