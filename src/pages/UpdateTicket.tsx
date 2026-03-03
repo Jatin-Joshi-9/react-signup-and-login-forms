@@ -66,19 +66,23 @@ const UpdateTicket = (): React.JSX.Element => {
                             )}
 
                             {isAllowed("UPDATE_TICKET_STATUS") && (
+                                <>
                                 <SelectField
-                                    label="Status" 
-                                    name="status" 
-                                    options={["IN_PROGRESS", "CLOSED"]} 
-                                />
+                                    label="Status"
+                                    name="status"
+                                    options={["IN_PROGRESS", "CLOSED"].map(currentStatus => ({ value: currentStatus, label: currentStatus }))} /><Error name="status" />
+                                    </>
                             )}
 
                             {isAllowed("UPDATE_TICKET_PRIORITY") && (
+                                <>
                                 <SelectField
-                                    label="Priority" 
-                                    name="priority" 
-                                    options={["LOW", "MEDIUM", "HIGH"]} 
+                                    label="Priority"
+                                    name="priority"
+                                    options={["LOW", "MEDIUM", "HIGH"].map(currentPriority => ({ value: currentPriority, label: currentPriority }))}
                                 />
+                                <Error name="priority" />
+                                </>
                             )}
 
                             <div className="mt-2">

@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import useUser from "../hooks/useUser";
 import axios from "axios";
 import type { AssignTicketType } from "../types/ticket";
-
+import Error from "../components/Error";
 const initialValues: AssignTicketType = {
     assignedToUserId: "",
 }
@@ -35,6 +35,11 @@ const AssignTicket = (): React.JSX.Element => {
 
         fetchAllSupportAgents();
     }, [user?.id]);
+
+    const agentOptions = supportAgents.map(agent => ({
+    value: agent.id,
+    label: agent.name,
+}));
 
     const handleSubmit = async (values: AssignTicketType) => {
         try {
@@ -64,8 +69,9 @@ const AssignTicket = (): React.JSX.Element => {
                             <SelectField
                                 label="Select Support Agent"
                                 name="assignedToUserId"
-                                options={supportAgents}
+                                options={agentOptions}
                             />
+                            <Error name="assignedToUserId" />
 
                             <div className="mt-2">
                                 <Button
