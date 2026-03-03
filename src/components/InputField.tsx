@@ -1,45 +1,28 @@
-import { useField } from "formik";
+import { Field } from "formik";
 
 type InputFieldProps = {
     name: string;
     label: string;
     type: string;
+    rows?: number;
 }
 
-const InputField = ({ label, ...props }: InputFieldProps) => {
-    const [field, meta] = useField(props);
+const InputField = ({label,name,type,rows}: InputFieldProps): React.JSX.Element => {
+    const isTextarea =(type === "textarea");
 
     return (
         <div className="flex flex-col gap-1">
-            <label
-                htmlFor={props.name}
-                className="text-sm font-medium text-neutral-700"
-            >
+            <label htmlFor={name} className="text-sm font-medium text-neutral-700">
                 {label}
             </label>
-
-            {
-                props.type === "textarea"
-                    ?
-                    <textarea
-                        id={props.name}
-                        {...field}
-                        {...props}
-                        className="px-4 py-2.5 rounded-lg border text-sm outline-none transition-all duration-200"
-                        rows={3}
-                    ></textarea>
-                    :
-                    <input
-                        id={props.name}
-                        {...field}
-                        {...props}
-                        className="px-4 py-2.5 rounded-lg border text-sm outline-none transition-all duration-200"
-                    />
-            }
-
-            {meta.error ? (
-                <div className="text-xs text-red-500 mt-0.5">{meta.error}</div>
-            ) : null}
+            <Field
+                as={isTextarea ? "textarea" : undefined}
+                id={name}
+                name={name}
+                type={!isTextarea ? type : undefined}
+                rows={isTextarea ? rows : undefined}
+                className="px-4 py-2.5 rounded-lg border text-sm outline-none transition-all duration-200"
+            />
         </div>
     )
 }

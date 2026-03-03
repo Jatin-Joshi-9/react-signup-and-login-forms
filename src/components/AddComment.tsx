@@ -35,6 +35,7 @@ const AddComment = ({ id }: { id: string | undefined }) => {
                             label=""
                             name="body"
                             type="textarea"
+                            rows={4}
                         />
 
                         <div className="mt-2">

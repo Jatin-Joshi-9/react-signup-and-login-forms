@@ -60,6 +60,7 @@ const CreateTicket = () => {
                                 label="Description"
                                 name="description"
                                 type="textarea"
+                                rows={6}
                             />
 
                             <div className="mt-2">
