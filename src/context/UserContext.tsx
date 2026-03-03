@@ -2,13 +2,7 @@ import React, { createContext, useEffect, useState } from "react";
 import type { User } from "../types/user";
 import { getCurrentUser } from "../api/user.api";
 import { removeAuthToken } from "../utils/authToken";
-
-type UserContextType = {
-    user: User | null;
-    setUser: (data: User | null) => void;
-    loading: boolean;
-    fetchCurrentUser: () => Promise<void>;
-}
+import type { UserContextType } from "../types/context";
 
 const UserContext = createContext<UserContextType>({
     user: null,

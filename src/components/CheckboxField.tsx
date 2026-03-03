@@ -7,7 +7,7 @@ type CheckboxFieldProps = {
     value?: string;
 }
 
-const CheckboxField = ({ label, ...props }: CheckboxFieldProps) => {
+const CheckboxField = ({ label, ...props }: CheckboxFieldProps):React.JSX.Element => {
     const [field] = useField(props);
 
     return (

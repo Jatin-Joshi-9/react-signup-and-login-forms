@@ -7,7 +7,7 @@ type SelectFieldProps = {
     options: string[] | SupportAgentType[];
 }
 
-const SelectField = ({ label, options, ...props }: SelectFieldProps) => {
+const SelectField = ({ label, options, ...props }: SelectFieldProps):React.JSX.Element => {
     const [field, meta] = useField(props);
 
     return (

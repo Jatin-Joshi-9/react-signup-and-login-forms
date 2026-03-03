@@ -9,16 +9,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import useUser from "../hooks/useUser";
 import axios from "axios";
-
-type AssignTicketType = {
-    assignedToUserId: string;
-}
+import type { AssignTicketType } from "../types/ticket";
 
 const initialValues: AssignTicketType = {
     assignedToUserId: "",
 }
 
-const AssignTicket = () => {
+const AssignTicket = (): React.JSX.Element => {
     const { id } = useParams();
     const { user } = useUser();
     const navigate = useNavigate();

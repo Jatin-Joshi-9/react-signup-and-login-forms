@@ -13,3 +13,7 @@ export type UpdateTicketType = {
     status?: string;
     priority?: string;
 }
+
+export type AssignTicketType = {
+    assignedToUserId: string;
+}

@@ -11,7 +11,7 @@ import Layout from "../components/Layout";
 import UpdateTicket from "../pages/UpdateTicket";
 import AssignTicket from "../pages/AssignTicket";
 
-const AppRoutes = () => {
+const AppRoutes = (): React.ReactNode => {
     return (
         <BrowserRouter>
             <Routes>

@@ -17,7 +17,9 @@ const Comments = ({ id }: { id: string | undefined }) => {
     return (
         <div className="border-t border-neutral-200 pt-4 space-y-4">
             <h1 className="font-semibold">Comments</h1>
-
+            {comments?.length === 0 &&
+                <p className="text-neutral-400">No Comments</p>
+            }
             {comments?.map((comment) => (
                 <div key={comment?.id}>
                     <div className="flex items-center gap-4 text-sm text-neutral-400">
@@ -29,9 +31,7 @@ const Comments = ({ id }: { id: string | undefined }) => {
                 </div>
             ))}
 
-            {comments?.length === 0 &&
-                <p className="text-neutral-400">No Comments</p>
-            }
+            
         </div>
     )
 }

@@ -17,7 +17,7 @@ const initialValues: UpdateTicketType = {
     priority: "",
 }
 
-const UpdateTicket = () => {
+const UpdateTicket = (): React.JSX.Element => {
     const { id } = useParams();
     const navigate = useNavigate();
     const isAllowed = useIsAllowed();
