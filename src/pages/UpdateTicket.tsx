@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import SelectField from "../components/SelectField";
+import Error from "../components/Error";
 
 const initialValues: UpdateTicketType = {
     description: "",
@@ -46,11 +47,13 @@ const UpdateTicket = () => {
                     {() => (
                         <Form className="flex flex-col gap-4">
                             {isAllowed("UPDATE_TICKET_DESCRIPTION") && (
-                                <InputField
+                                <><InputField
                                     label="Description"
                                     name="description"
                                     type="textarea"
                                 />
+                                <Error name="description" />
+                                </>
                             )}
 
                             {isAllowed("CLOSE_TICKET") && (

@@ -9,6 +9,7 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import useIsAllowed from "../hooks/useIsAllowed";
 import { useEffect } from "react";
+import Error from "../components/Error";
 
 const initialValues: TicketType = {
     title: "",
@@ -55,6 +56,7 @@ const CreateTicket = () => {
                                 name="title"
                                 type="text"
                             />
+                            <Error name="title" />
 
                             <InputField
                                 label="Description"
@@ -62,6 +64,7 @@ const CreateTicket = () => {
                                 type="textarea"
                                 rows={6}
                             />
+                            <Error name="description" />
 
                             <div className="mt-2">
                                 <Button
