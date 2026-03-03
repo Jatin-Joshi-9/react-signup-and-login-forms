@@ -1,4 +1,5 @@
 import { Form, Formik } from "formik";
+import Error from "../components/Error";
 import InputField from "../components/InputField";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button";
@@ -46,17 +47,19 @@ const Login = () => {
                     onSubmit={handleSubmit}
                 >
                     {() => (
-                        <Form className="flex flex-col gap-4">
+                        <Form className="flex flex-col gap-2">
                             <InputField
                                 label="Email"
                                 name="email"
                                 type="email"
                             />
+                            <Error name="email" />
                             <InputField
                                 label="Password"
                                 name="password"
                                 type="password"
                             />
+                            <Error name="password" />
 
                             <div className="mt-2">
                                 <Button

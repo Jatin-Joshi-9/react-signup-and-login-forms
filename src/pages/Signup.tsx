@@ -7,6 +7,7 @@ import { validateSignup } from "../utils/validateFields";
 import axios from "axios";
 import { userSignup } from "../api/auth.api";
 import toast from "react-hot-toast";
+import Error from "../components/Error";
 
 const initialValues: SignupPropsType = {
     name: "",
@@ -52,21 +53,25 @@ const Signup = () => {
                                 name="name"
                                 type="text"
                             />
+                            <Error name="name" />
                             <InputField
                                 label="Email"
                                 name="email"
                                 type="email"
                             />
+                            <Error name="email" />
                             <InputField
                                 label="Password"
                                 name="password"
                                 type="password"
                             />
+                            <Error name="password" />
                             <InputField
                                 label="Confirm Password"
                                 name="confirmPassword"
                                 type="password"
                             />
+                            <Error name="confirmPassword" />
 
                             <div className="mt-2">
                                 <Button
