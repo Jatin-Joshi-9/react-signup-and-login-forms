@@ -9,13 +9,14 @@ import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
 import useIsAllowed from "../hooks/useIsAllowed";
 import { useEffect } from "react";
+import Error from "../components/Error";
 
 const initialValues: TicketType = {
     title: "",
     description: "",
 }
 
-const CreateTicket = () => {
+const CreateTicket = (): React.JSX.Element => {
     const navigate = useNavigate();
     const isAllowed = useIsAllowed();
     const handleSubmit = async (values: TicketType) => {
@@ -36,7 +37,7 @@ const CreateTicket = () => {
         if (!isAllowed("CREATE_TICKET")) {
             navigate("/");
         }
-    }, []);
+    }, [isAllowed, navigate]);
 
     return (
         <section className="w-full flex items-center justify-center mt-20 p-4">
@@ -55,12 +56,15 @@ const CreateTicket = () => {
                                 name="title"
                                 type="text"
                             />
+                            <Error name="title" />
 
                             <InputField
                                 label="Description"
                                 name="description"
                                 type="textarea"
+                                rows={6}
                             />
+                            <Error name="description" />
 
                             <div className="mt-2">
                                 <Button

@@ -5,8 +5,8 @@ import { validateComment } from "../utils/validateTicket";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { addComment } from "../api/ticket.api";
-
-const AddComment = ({ id }: { id: string | undefined }) => {
+import Error from "./Error";
+const AddComment = ({ id }: { id: string | undefined }): React.ReactNode => {
     const handleSubmit = async (values: { body: string }) => {
         try {
             const data = await addComment(id, values.body);
@@ -35,7 +35,9 @@ const AddComment = ({ id }: { id: string | undefined }) => {
                             label=""
                             name="body"
                             type="textarea"
+                            rows={4}
                         />
+                        <Error name="body" />
 
                         <div className="mt-2">
                             <Button

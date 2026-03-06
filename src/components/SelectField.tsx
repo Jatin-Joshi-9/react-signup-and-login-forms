@@ -1,42 +1,35 @@
-import { useField } from "formik";
-import type { SupportAgentType } from "../types/user";
+import { Field } from "formik";
+
+type OptionType = {
+    value: string;
+    label: string;
+}
 
 type SelectFieldProps = {
     name: string;
     label: string;
-    options: string[] | SupportAgentType[];
+    options: OptionType[];
 }
 
-const SelectField = ({ label, options, ...props }: SelectFieldProps) => {
-    const [field, meta] = useField(props);
-
+const SelectField = ({ label, name, options }: SelectFieldProps): React.JSX.Element => {
     return (
         <div className="flex flex-col gap-1">
-            <label htmlFor={props.name} className="text-sm font-medium text-neutral-700">
+            <label htmlFor={name} className="text-sm font-medium text-neutral-700">
                 {label}
             </label>
-
-            <select
-                id={props.name}
-                {...field}
-                {...props}
+            <Field
+                as="select"
+                id={name}
+                name={name}
                 className="p-2.5 rounded-lg border text-sm outline-none transition-all duration-200"
             >
                 <option value="">Select {label}</option>
-                {options.map(option =>
-                    typeof option === "string" ? (
-                        <option key={option} value={option}>{option}</option>
-                    ) : (
-                        <option key={option.id} value={option.id}>{option.name}</option>
-                    )
-                )}
-            </select>
-
-            {meta.error && (
-                <div className="text-xs text-red-500 mt-0.5">{meta.error}</div>
-            )}
+                {options.map(option => (
+                    <option key={option.value} value={option.value}>{option.label}</option>
+                ))}
+            </Field>
         </div>
-    )
-}
+    );
+};
 
 export default SelectField;

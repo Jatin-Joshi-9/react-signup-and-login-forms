@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import SelectField from "../components/SelectField";
+import Error from "../components/Error";
 
 const initialValues: UpdateTicketType = {
     description: "",
@@ -16,7 +17,7 @@ const initialValues: UpdateTicketType = {
     priority: "",
 }
 
-const UpdateTicket = () => {
+const UpdateTicket = (): React.JSX.Element => {
     const { id } = useParams();
     const navigate = useNavigate();
     const isAllowed = useIsAllowed();
@@ -46,11 +47,13 @@ const UpdateTicket = () => {
                     {() => (
                         <Form className="flex flex-col gap-4">
                             {isAllowed("UPDATE_TICKET_DESCRIPTION") && (
-                                <InputField
+                                <><InputField
                                     label="Description"
                                     name="description"
                                     type="textarea"
                                 />
+                                <Error name="description" />
+                                </>
                             )}
 
                             {isAllowed("CLOSE_TICKET") && (
@@ -63,19 +66,23 @@ const UpdateTicket = () => {
                             )}
 
                             {isAllowed("UPDATE_TICKET_STATUS") && (
+                                <>
                                 <SelectField
-                                    label="Status" 
-                                    name="status" 
-                                    options={["IN_PROGRESS", "CLOSED"]} 
-                                />
+                                    label="Status"
+                                    name="status"
+                                    options={["IN_PROGRESS", "CLOSED"].map(currentStatus => ({ value: currentStatus, label: currentStatus }))} /><Error name="status" />
+                                    </>
                             )}
 
                             {isAllowed("UPDATE_TICKET_PRIORITY") && (
+                                <>
                                 <SelectField
-                                    label="Priority" 
-                                    name="priority" 
-                                    options={["LOW", "MEDIUM", "HIGH"]} 
+                                    label="Priority"
+                                    name="priority"
+                                    options={["LOW", "MEDIUM", "HIGH"].map(currentPriority => ({ value: currentPriority, label: currentPriority }))}
                                 />
+                                <Error name="priority" />
+                                </>
                             )}
 
                             <div className="mt-2">
